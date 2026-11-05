@@ -74,6 +74,25 @@ export function SettingsPanel({ state, settings, onSettings, onClose }: Props): 
             onValueChange={([v]) => onSettings({ opacity: v / 100 })}
           />
         </Row>
+        <Row label="Power average">
+          <div className="flex rounded-md bg-white/5 p-0.5">
+            {([1, 3, 5] as const).map((sec) => (
+              <button
+                key={sec}
+                type="button"
+                onClick={() => onSettings({ powerAverageSec: sec })}
+                className={cn(
+                  'rounded px-2.5 py-0.5 text-xs tabular-nums transition-colors',
+                  settings.powerAverageSec === sec
+                    ? 'bg-white text-zinc-900'
+                    : 'text-white/70 hover:text-white'
+                )}
+              >
+                {sec}s
+              </button>
+            ))}
+          </div>
+        </Row>
         <Row label="Zone colors">
           <Switch
             checked={settings.zoneColors}

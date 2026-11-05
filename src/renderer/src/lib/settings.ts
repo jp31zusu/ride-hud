@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 
 export interface Settings {
   opacity: number
+  powerAverageSec: 1 | 3 | 5
   zoneColors: boolean
   ftp: number
   maxHr: number
@@ -11,6 +12,7 @@ const KEY = 'overlay.settings.v1'
 
 export const DEFAULT_SETTINGS: Settings = {
   opacity: 0.55,
+  powerAverageSec: 3,
   zoneColors: true,
   ftp: 200,
   maxHr: 185
