@@ -1,0 +1,47 @@
+appId: com.rideoverlay.app
+productName: Ride Overlay
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md,components.json}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+asarUnpack:
+  - resources/**
+win:
+  executableName: ride-overlay
+  target:
+    - nsis
+    - portable
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+portable:
+  artifactName: ${name}-${version}-portable.${ext}
+mac:
+  category: public.app-category.healthcare-fitness
+  entitlementsInherit: build/entitlements.mac.plist
+  target:
+    - dmg
+  extendInfo:
+    NSBluetoothAlwaysUsageDescription: Ride Overlay connects to your smart trainer and heart rate broadcast to show live power, cadence and heart rate.
+    NSBluetoothPeripheralUsageDescription: Ride Overlay connects to your smart trainer and heart rate broadcast to show live power, cadence and heart rate.
+    # Runs as an accessory app (no Dock icon) so the overlay can float over fullscreen spaces.
+    LSUIElement: true
+  notarize: false
+dmg:
+  artifactName: ${name}-${version}.${ext}
+linux:
+  target:
+    - AppImage
+    - deb
+  maintainer: Ride Overlay
+  category: Utility
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
