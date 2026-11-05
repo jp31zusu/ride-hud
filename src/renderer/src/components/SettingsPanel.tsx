@@ -36,7 +36,7 @@ export function SettingsPanel({ state, settings, onSettings, onClose }: Props): 
           <BluetoothOff className="mt-0.5 size-4 shrink-0" />
           <p>
             Bluetooth isn&apos;t available. Turn it on in your system settings and restart the
-            overlay. You can still try the demo mode below.
+            overlay.
           </p>
         </div>
       ) : (
@@ -117,9 +117,6 @@ export function SettingsPanel({ state, settings, onSettings, onClose }: Props): 
             />
           </div>
         )}
-        <Row label="Demo data">
-          <Switch checked={state.demo} onCheckedChange={(on) => hub.setDemo(on)} />
-        </Row>
       </div>
 
       <div className="mt-4 space-y-1 border-t border-white/10 pt-3 text-[11px] text-white/45">

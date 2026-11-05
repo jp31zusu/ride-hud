@@ -23,7 +23,6 @@ export interface Sample {
 
 export interface HubState {
   bluetooth: 'unknown' | 'available' | 'unavailable'
-  demo: boolean
   links: Record<Purpose, LinkState>
   power: Sample[]
   cadence?: Sample
@@ -198,14 +197,12 @@ export class SensorHub {
   private scanning = false
   private scanQueued = false
   private retryTimer?: ReturnType<typeof setTimeout>
-  private demoTimer?: ReturnType<typeof setInterval>
   private pendingRequest?: Promise<BluetoothDevice>
 
   constructor() {
     const saved = loadSaved()
     this.state = {
       bluetooth: 'unknown',
-      demo: false,
       links: {
         trainer: { status: saved.trainer ? 'searching' : 'unpaired', saved: saved.trainer },
         hr: { status: saved.hr ? 'searching' : 'unpaired', saved: saved.hr }
@@ -248,20 +245,15 @@ export class SensorHub {
     this.set({ links })
   }
 
-  pushPower(watts: number): void {
-    if (this.state.demo) return
-    this.recordPower(watts)
-  }
-
   pushCadence(rpm: number): void {
-    if (!this.state.demo) this.set({ cadence: { value: rpm, at: Date.now() } })
+    this.set({ cadence: { value: rpm, at: Date.now() } })
   }
 
   pushHeartRate(bpm: number): void {
-    if (!this.state.demo) this.set({ heartRate: { value: bpm, at: Date.now() } })
+    this.set({ heartRate: { value: bpm, at: Date.now() } })
   }
 
-  private recordPower(watts: number): void {
+  pushPower(watts: number): void {
     const now = Date.now()
     const power = this.state.power.filter((s) => now - s.at < POWER_HISTORY_MS)
     power.push({ value: Math.max(0, watts), at: now })
@@ -369,29 +361,6 @@ export class SensorHub {
     else this.set({ power: [], cadence: undefined })
     this.persist()
     void window.api.bluetooth.setTargets(this.targets())
-  }
-
-  setDemo(on: boolean): void {
-    clearInterval(this.demoTimer)
-    this.set({ demo: on, power: [], cadence: undefined, heartRate: undefined })
-    if (!on) return
-    let t = 0
-    let hr = 112
-    this.demoTimer = setInterval(() => {
-      t += 1
-      const interval = Math.floor(t / 45) % 2 === 1
-      const target = interval ? 285 : 175
-      const watts = target + Math.round(Math.sin(t / 2.3) * 12 + (Math.random() - 0.5) * 24)
-      hr += ((interval ? 162 : 128) - hr) * 0.04 + (Math.random() - 0.5)
-      this.recordPower(watts)
-      this.set({
-        cadence: {
-          value: (interval ? 96 : 86) + Math.round((Math.random() - 0.5) * 4),
-          at: Date.now()
-        },
-        heartRate: { value: Math.round(hr), at: Date.now() }
-      })
-    }, 1000)
   }
 }
 

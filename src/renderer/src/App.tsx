@@ -29,8 +29,8 @@ export default function App(): ReactNode {
 
   useEffect(() => {
     void hub.start().then(() => {
-      const { links, demo } = hub.getState()
-      if (!demo && links.trainer.status === 'unpaired' && links.hr.status === 'unpaired')
+      const { links } = hub.getState()
+      if (links.trainer.status === 'unpaired' && links.hr.status === 'unpaired')
         setSettingsOpen(true)
     })
     const offSettings = window.api.window.onOpenSettings(() => setSettingsOpen(true))

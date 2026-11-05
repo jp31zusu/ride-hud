@@ -23,8 +23,8 @@ export function MetricsBar({
   const watts = averagePower(state.power, settings.powerAverageSec, now)
   const cadence = fresh(state.cadence, now)
   const hr = fresh(state.heartRate, now)
-  const trainer = state.demo ? 'connected' : state.links.trainer.status
-  const hrStatus = state.demo ? 'connected' : state.links.hr.status
+  const trainer = state.links.trainer.status
+  const hrStatus = state.links.hr.status
 
   return (
     <div
@@ -77,11 +77,6 @@ export function MetricsBar({
       >
         <Settings2 className="size-3.5" />
       </button>
-      {state.demo && (
-        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-medium tracking-widest text-white/35 uppercase">
-          Demo
-        </span>
-      )}
     </div>
   )
 }
