@@ -122,11 +122,13 @@ export function SettingsPanel({ state, settings, onSettings, onClose }: Props): 
       <div className="mt-4 flex justify-end border-t border-white/10 pt-3">
         <Button
           variant="ghost"
-          size="sm"
-          className="h-7 text-white/60 hover:text-white"
+          size="icon"
+          className="size-7 text-white/60 hover:text-white"
+          aria-label="Quit"
+          title="Quit"
           onClick={() => window.api.window.quit()}
         >
-          <Power className="size-3.5" /> Quit
+          <Power className="size-3.5" />
         </Button>
       </div>
     </div>
