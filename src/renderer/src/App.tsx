@@ -25,6 +25,7 @@ export default function App(): ReactNode {
   const [settings, updateSettings] = useSettings()
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [clickThrough, setClickThrough] = useState(false)
+  const [hint, setHint] = useState<string | null>(null)
   const rootRef = useRef<HTMLDivElement>(null)
   const now = useNow(500)
 
@@ -34,12 +35,18 @@ export default function App(): ReactNode {
       if (!demo && links.trainer.status === 'unpaired' && links.hr.status === 'unpaired')
         setSettingsOpen(true)
     })
+    const shortcut = navigator.userAgent.includes('Mac') ? '⌘⌥O' : 'Ctrl+Alt+O'
+    let hintTimer: ReturnType<typeof setTimeout> | undefined
     const offClick = window.api.window.onClickThrough((enabled) => {
       setClickThrough(enabled)
       if (enabled) setSettingsOpen(false)
+      setHint(enabled ? `Click-through on · ${shortcut} to undo` : 'Overlay is clickable again')
+      clearTimeout(hintTimer)
+      hintTimer = setTimeout(() => setHint(null), 3500)
     })
     const offSettings = window.api.window.onOpenSettings(() => setSettingsOpen(true))
     return () => {
+      clearTimeout(hintTimer)
       offClick()
       offSettings()
     }
@@ -62,6 +69,7 @@ export default function App(): ReactNode {
         settings={settings}
         now={now}
         clickThrough={clickThrough}
+        hint={hint}
         settingsOpen={settingsOpen}
         onToggleSettings={() => setSettingsOpen((o) => !o)}
       />

@@ -40,7 +40,7 @@ If a device doesn't appear in the list:
 3. **For an ERG workout:** in the activity, hold **MENU → Training → Workouts**, choose a workout, and select **Do Workout**. The watch sets the trainer's resistance to match each power target.
 4. Press **START** on the watch to begin recording.
 5. Start your movie and put it in fullscreen. Drag the overlay to a corner.
-6. Press **Ctrl+Alt+O** (**⌘⌥O** on a Mac) so your clicks go to the video instead of the overlay.
+6. Press **Ctrl+Alt+O** (**⌘⌥O** on a Mac) so your clicks go to the video instead of the overlay. The settings panel and gear hide, and a small lock icon appears. Press the same shortcut again to make the overlay clickable.
 7. When you're done, stop and save the activity on the watch. Garmin Connect syncs it as usual.
 
 ## Quick reference

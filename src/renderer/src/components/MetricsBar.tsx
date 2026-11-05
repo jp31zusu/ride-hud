@@ -1,4 +1,4 @@
-import { Heart, RotateCw, Settings2, Zap } from 'lucide-react'
+import { Heart, Lock, RotateCw, Settings2, Zap } from 'lucide-react'
 import type { ReactNode } from 'react'
 import type { HubState, LinkStatus } from '@/ble/hub'
 import type { Settings } from '@/lib/settings'
@@ -10,6 +10,7 @@ interface Props {
   settings: Settings
   now: number
   clickThrough: boolean
+  hint: string | null
   settingsOpen: boolean
   onToggleSettings: () => void
 }
@@ -19,6 +20,7 @@ export function MetricsBar({
   settings,
   now,
   clickThrough,
+  hint,
   settingsOpen,
   onToggleSettings
 }: Props): ReactNode {
@@ -66,6 +68,12 @@ export function MetricsBar({
         }
       />
 
+      {clickThrough && (
+        <Lock
+          aria-label="Click-through is on"
+          className="absolute right-2 bottom-2 size-3 text-white/35"
+        />
+      )}
       {!clickThrough && (
         <button
           type="button"
@@ -85,6 +93,11 @@ export function MetricsBar({
         <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-medium tracking-widest text-white/35 uppercase">
           Demo
         </span>
+      )}
+      {hint && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-black/80 px-3 text-center text-xs font-medium text-white">
+          {hint}
+        </div>
       )}
     </div>
   )
