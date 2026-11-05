@@ -8,6 +8,8 @@ A tiny, always-on-top, semi-transparent desktop overlay that shows live **power 
 - Remembers paired sensors and reconnects automatically on launch and after dropouts.
 - Optional power/HR zone colors, 1/3/5-second power averaging, adjustable background opacity, and a demo mode for trying it without hardware.
 
+**New here? Follow the step-by-step [tutorial](docs/TUTORIAL.md) to connect everything and start a workout.**
+
 ## Recommended setup with a Garmin watch
 
 Your watch can control ERG mode and record the workout itself; the overlay only *reads* data.
