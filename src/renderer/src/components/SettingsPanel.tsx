@@ -52,7 +52,7 @@ export function SettingsPanel({ state, settings, onSettings, onClose }: Props): 
           <SensorRow
             purpose="hr"
             title="Heart rate"
-            hint="Garmin watch → Broadcast Heart Rate"
+            hint="Garmin Fenix 7 Pro"
             icon={<Heart className="size-4" />}
             link={state.links.hr}
             state={state}
@@ -73,25 +73,6 @@ export function SettingsPanel({ state, settings, onSettings, onClose }: Props): 
             value={[Math.round(settings.opacity * 100)]}
             onValueChange={([v]) => onSettings({ opacity: v / 100 })}
           />
-        </Row>
-        <Row label="Power average">
-          <div className="flex rounded-md bg-white/5 p-0.5">
-            {([1, 3, 5] as const).map((sec) => (
-              <button
-                key={sec}
-                type="button"
-                onClick={() => onSettings({ powerAverageSec: sec })}
-                className={cn(
-                  'rounded px-2.5 py-0.5 text-xs tabular-nums transition-colors',
-                  settings.powerAverageSec === sec
-                    ? 'bg-white text-zinc-900'
-                    : 'text-white/70 hover:text-white'
-                )}
-              >
-                {sec}s
-              </button>
-            ))}
-          </div>
         </Row>
         <Row label="Zone colors">
           <Switch
@@ -119,11 +100,7 @@ export function SettingsPanel({ state, settings, onSettings, onClose }: Props): 
         )}
       </div>
 
-      <div className="mt-4 space-y-1 border-t border-white/10 pt-3 text-[11px] text-white/45">
-        <p>Drag the metrics bar to move it. Settings and Quit are also in the tray icon menu.</p>
-      </div>
-
-      <div className="mt-3 flex justify-end">
+      <div className="mt-4 flex justify-end border-t border-white/10 pt-3">
         <Button
           variant="ghost"
           size="sm"

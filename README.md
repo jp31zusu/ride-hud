@@ -6,7 +6,7 @@ A tiny, always-on-top, semi-transparent desktop overlay that shows live **power 
 - Reads heart rate from any standard BLE heart rate broadcaster — including a **Garmin Fenix 7 Pro** with *Broadcast Heart Rate* turned on.
 - Floats above other windows, including fullscreen video players.
 - Remembers paired sensors and reconnects automatically on launch and after dropouts.
-- Optional power/HR zone colors, 1/3/5-second power averaging and adjustable background opacity.
+- Power shown as a 3-second average, optional power/HR zone colors, and adjustable background opacity.
 
 **New here? Follow the step-by-step [tutorial](docs/TUTORIAL.md) to connect everything and start a workout.**
 

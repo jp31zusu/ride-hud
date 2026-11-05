@@ -5,6 +5,8 @@ import type { Settings } from '@/lib/settings'
 import { STALE_MS, averagePower, heartRateZoneColor, powerZoneColor } from '@/lib/zones'
 import { cn } from '@/lib/utils'
 
+const POWER_AVERAGE_SEC = 3
+
 interface Props {
   state: HubState
   settings: Settings
@@ -20,7 +22,7 @@ export function MetricsBar({
   settingsOpen,
   onToggleSettings
 }: Props): ReactNode {
-  const watts = averagePower(state.power, settings.powerAverageSec, now)
+  const watts = averagePower(state.power, POWER_AVERAGE_SEC, now)
   const cadence = fresh(state.cadence, now)
   const hr = fresh(state.heartRate, now)
   const trainer = state.links.trainer.status
