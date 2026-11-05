@@ -10,7 +10,9 @@ The watch controls ERG mode and records the ride, so it connects to the trainer 
 
 1. Plug in the KICKR CORE 2 and pedal a few strokes to wake it up.
 2. On the Fenix 7 Pro, hold **MENU** and go to **Sensors & Accessories → Add New → Search All**. You can also pick **Indoor Trainer** from that list.
-3. When the KICKR shows up, choose the **ANT+** entry. It usually shows a numeric ANT ID, while the Bluetooth entry doesn't. Using ANT+ leaves the trainer's Bluetooth free for the overlay.
+3. The KICKR shows up several times. Choose the entry with a **number** (its ANT+ ID, for example `17253`) and the **indoor trainer symbol**. That one carries power and cadence and lets the watch control ERG.
+   - Skip the entries with a **lightning bolt**. They connect to the trainer only as a power meter, without resistance control.
+   - Skip the **KICKR CORE …** entry with a name instead of a number. It's the Bluetooth connection, which the overlay needs.
 
 ## 2. Turn on heart rate broadcasting (once)
 
