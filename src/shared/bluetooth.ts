@@ -32,8 +32,6 @@ export interface OverlayApi {
   }
   window: {
     resize(width: number, height: number): void
-    setClickThrough(enabled: boolean): void
-    onClickThrough(cb: (enabled: boolean) => void): () => void
     onOpenSettings(cb: () => void): () => void
     quit(): void
   }

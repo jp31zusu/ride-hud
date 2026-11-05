@@ -18,8 +18,6 @@ const api: OverlayApi = {
   },
   window: {
     resize: (width, height) => ipcRenderer.send('win:resize', width, height),
-    setClickThrough: (enabled) => ipcRenderer.send('win:click-through', enabled),
-    onClickThrough: (cb) => on('win:click-through', cb),
     onOpenSettings: (cb) => on('win:open-settings', cb),
     quit: () => ipcRenderer.send('app:quit')
   }

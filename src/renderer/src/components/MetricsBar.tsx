@@ -1,4 +1,4 @@
-import { Heart, Lock, RotateCw, Settings2, Zap } from 'lucide-react'
+import { Heart, RotateCw, Settings2, Zap } from 'lucide-react'
 import type { ReactNode } from 'react'
 import type { HubState, LinkStatus } from '@/ble/hub'
 import type { Settings } from '@/lib/settings'
@@ -9,8 +9,6 @@ interface Props {
   state: HubState
   settings: Settings
   now: number
-  clickThrough: boolean
-  hint: string | null
   settingsOpen: boolean
   onToggleSettings: () => void
 }
@@ -19,8 +17,6 @@ export function MetricsBar({
   state,
   settings,
   now,
-  clickThrough,
-  hint,
   settingsOpen,
   onToggleSettings
 }: Props): ReactNode {
@@ -68,36 +64,23 @@ export function MetricsBar({
         }
       />
 
-      {clickThrough && (
-        <Lock
-          aria-label="Click-through is on"
-          className="absolute right-2 bottom-2 size-3 text-white/35"
-        />
-      )}
-      {!clickThrough && (
-        <button
-          type="button"
-          aria-label="Open settings"
-          onClick={onToggleSettings}
-          className={cn(
-            'no-drag absolute right-1 bottom-1 rounded-md p-1 text-white/60 transition-opacity hover:bg-white/10 hover:text-white',
-            settingsOpen
-              ? 'opacity-100'
-              : 'opacity-0 group-hover:opacity-100 focus-visible:opacity-100'
-          )}
-        >
-          <Settings2 className="size-3.5" />
-        </button>
-      )}
+      <button
+        type="button"
+        aria-label="Open settings"
+        onClick={onToggleSettings}
+        className={cn(
+          'no-drag absolute right-1 bottom-1 rounded-md p-1 text-white/60 transition-opacity hover:bg-white/10 hover:text-white',
+          settingsOpen
+            ? 'opacity-100'
+            : 'opacity-0 group-hover:opacity-100 focus-visible:opacity-100'
+        )}
+      >
+        <Settings2 className="size-3.5" />
+      </button>
       {state.demo && (
         <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-medium tracking-widest text-white/35 uppercase">
           Demo
         </span>
-      )}
-      {hint && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-black/80 px-3 text-center text-xs font-medium text-white">
-          {hint}
-        </div>
       )}
     </div>
   )

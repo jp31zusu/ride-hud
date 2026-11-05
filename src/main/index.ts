@@ -1,14 +1,4 @@
-import {
-  app,
-  BrowserWindow,
-  globalShortcut,
-  ipcMain,
-  Menu,
-  nativeImage,
-  screen,
-  shell,
-  Tray
-} from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, screen, shell, Tray } from 'electron'
 import { join } from 'path'
 import { readFileSync, writeFileSync } from 'fs'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
@@ -18,13 +8,10 @@ import { setupBluetooth } from './bluetooth'
 // Web Bluetooth is still behind this flag in Chromium on Linux.
 app.commandLine.appendSwitch('enable-experimental-web-platform-features')
 
-const SHORTCUT_CLICK_THROUGH = 'CommandOrControl+Alt+O'
-const SHORTCUT_TOGGLE = 'CommandOrControl+Alt+H'
 const MARGIN = 24
 
 let win: BrowserWindow | null = null
 let tray: Tray | null = null
-let clickThrough = false
 
 const prefsPath = (): string => join(app.getPath('userData'), 'window.json')
 
@@ -113,57 +100,23 @@ function createWindow(): void {
   }
 }
 
-function setClickThrough(enabled: boolean): void {
-  clickThrough = enabled
-  win?.setIgnoreMouseEvents(enabled, { forward: true })
-  win?.webContents.send('win:click-through', enabled)
-  updateTrayMenu()
-}
-
-function toggleVisible(): void {
-  if (!win) return
-  if (win.isVisible()) win.hide()
-  else win.showInactive()
-  updateTrayMenu()
-}
-
 function openSettings(): void {
   if (!win) return
-  if (clickThrough) setClickThrough(false)
   win.showInactive()
   win.webContents.send('win:open-settings')
-}
-
-function updateTrayMenu(): void {
-  if (!tray) return
-  const accel = (s: string): string =>
-    s.replace('CommandOrControl', process.platform === 'darwin' ? 'Cmd' : 'Ctrl')
-  tray.setContextMenu(
-    Menu.buildFromTemplate([
-      {
-        label: win?.isVisible() ? 'Hide overlay' : 'Show overlay',
-        sublabel: accel(SHORTCUT_TOGGLE),
-        click: toggleVisible
-      },
-      {
-        label: 'Click-through',
-        sublabel: accel(SHORTCUT_CLICK_THROUGH),
-        type: 'checkbox',
-        checked: clickThrough,
-        click: (item) => setClickThrough(item.checked)
-      },
-      { label: 'Sensors & settings…', click: openSettings },
-      { type: 'separator' },
-      { label: 'Quit', role: 'quit' }
-    ])
-  )
 }
 
 function createTray(): void {
   const image = nativeImage.createFromPath(icon).resize({ width: 18, height: 18 })
   tray = new Tray(image)
   tray.setToolTip('Ride Overlay')
-  updateTrayMenu()
+  tray.setContextMenu(
+    Menu.buildFromTemplate([
+      { label: 'Sensors & settings…', click: openSettings },
+      { type: 'separator' },
+      { label: 'Quit', role: 'quit' }
+    ])
+  )
 }
 
 if (!app.requestSingleInstanceLock()) {
@@ -188,16 +141,11 @@ if (!app.requestSingleInstanceLock()) {
       const y = Math.min(Math.max(bounds.y, area.y), area.y + area.height - h)
       win.setBounds({ x, y, width: w, height: h })
     })
-    ipcMain.on('win:click-through', (_e, enabled: boolean) => setClickThrough(enabled))
     ipcMain.on('app:quit', () => app.quit())
 
     createWindow()
     createTray()
-
-    globalShortcut.register(SHORTCUT_CLICK_THROUGH, () => setClickThrough(!clickThrough))
-    globalShortcut.register(SHORTCUT_TOGGLE, toggleVisible)
   })
 
-  app.on('will-quit', () => globalShortcut.unregisterAll())
   app.on('window-all-closed', () => app.quit())
 }

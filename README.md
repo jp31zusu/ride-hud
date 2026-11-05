@@ -25,8 +25,6 @@ Alternative: if you use a chest strap (HRM-Pro, etc.), pair it directly as the h
 - **First launch** opens the settings panel. Click **Pair** next to *Smart trainer* or *Heart rate*, then pick the device from the list. Pedal a few strokes if the trainer doesn't show up — it sleeps when idle.
 - **Move it** by dragging the metrics bar. Its position is remembered.
 - **Settings** — hover the bar and click the small gear (bottom-right), or use the tray icon → *Sensors & settings…*.
-- **Click-through** — `Ctrl+Alt+O` (`⌘⌥O` on macOS) makes the overlay ignore the mouse so clicks reach the video underneath. While it's on, the settings panel and gear are hidden and a small lock icon shows in the corner. Press the shortcut again to make the overlay interactive.
-- **Hide / show** — `Ctrl+Alt+H` (`⌘⌥H` on macOS).
 - **Quit** — tray icon → *Quit*, or the *Quit* button in settings.
 
 A dot next to each metric shows the connection state: green = connected, pulsing amber = searching or reconnecting, gray = not paired. Values older than five seconds are shown as `--`.

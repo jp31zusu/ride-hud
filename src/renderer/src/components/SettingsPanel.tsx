@@ -16,10 +16,6 @@ interface Props {
   onClose: () => void
 }
 
-const isMac = navigator.userAgent.includes('Mac')
-const mod = isMac ? '⌘' : 'Ctrl'
-const alt = isMac ? '⌥' : 'Alt'
-
 export function SettingsPanel({ state, settings, onSettings, onClose }: Props): ReactNode {
   return (
     <div className="no-drag mt-2 w-full rounded-2xl border border-white/10 bg-zinc-950/95 p-3 text-sm shadow-xl shadow-black/40">
@@ -127,13 +123,7 @@ export function SettingsPanel({ state, settings, onSettings, onClose }: Props): 
       </div>
 
       <div className="mt-4 space-y-1 border-t border-white/10 pt-3 text-[11px] text-white/45">
-        <p>
-          <Kbd>{mod}</Kbd> <Kbd>{alt}</Kbd> <Kbd>O</Kbd> click-through (lets clicks reach the video)
-        </p>
-        <p>
-          <Kbd>{mod}</Kbd> <Kbd>{alt}</Kbd> <Kbd>H</Kbd> hide / show overlay
-        </p>
-        <p>Drag the metrics bar to move it. The tray icon has these options too.</p>
+        <p>Drag the metrics bar to move it. Settings and Quit are also in the tray icon menu.</p>
       </div>
 
       <div className="mt-3 flex justify-end">
@@ -315,13 +305,5 @@ function NumberField({
         }}
       />
     </label>
-  )
-}
-
-function Kbd({ children }: { children: ReactNode }): ReactNode {
-  return (
-    <kbd className="rounded border border-white/15 bg-white/5 px-1 font-sans text-[10px] text-white/70">
-      {children}
-    </kbd>
   )
 }
