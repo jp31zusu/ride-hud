@@ -54,7 +54,7 @@ npm run build:linux   # AppImage + .deb
 
 macOS will ask for Bluetooth permission on first use. Builds are unsigned, so on macOS right-click → *Open* the first time; on Windows choose *More info → Run anyway*.
 
-Other scripts: `npm test` (unit tests for the Bluetooth parsers), `npm run lint`, `npm run typecheck`.
+Other scripts: `npm test` (unit tests for the Bluetooth parsers), `npm run lint`, `npm run typecheck`, and `npm run icons`, which regenerates every app and tray icon from `build/icon.svg` and `build/tray.svg`.
 
 ## How it works
 

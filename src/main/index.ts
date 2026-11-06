@@ -3,6 +3,7 @@ import { join } from 'path'
 import { readFileSync, writeFileSync } from 'fs'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import trayTemplate from '../../resources/trayTemplate.png?asset'
 import { setupBluetooth } from './bluetooth'
 
 // Web Bluetooth is still behind this flag in Chromium on Linux.
@@ -107,7 +108,11 @@ function openSettings(): void {
 }
 
 function createTray(): void {
-  const image = nativeImage.createFromPath(icon).resize({ width: 18, height: 18 })
+  // macOS picks up trayTemplate@2x.png automatically and tints it for the menu bar.
+  const image =
+    process.platform === 'darwin'
+      ? nativeImage.createFromPath(trayTemplate)
+      : nativeImage.createFromPath(icon).resize({ width: 16, height: 16 })
   tray = new Tray(image)
   tray.setToolTip('Ride Overlay')
   tray.setContextMenu(
